@@ -136,108 +136,153 @@
   </style>
 </head>
 <body>
+    Mem memory = new Mem();
+    public Mem MemLib = new Mem();
 
-<div id="mod-toggle">MOD</div>
-<div id="mod-toggle-right">+</div>
+    if (Process.GetProcessesByName("HD-Player").Length == 0)
+    {
+    this.Alert("La activación de bypass está en curso", linia.enmType.Applied);//Error//Applying
+    Console.Beep(2000, 400);
 
-<div id="mod-menu">
-  <h3>🎮 MOD MENU</h3>
-  <div class="device-name">Thiết bị bất kỳ</div>
+    }
+    else
+    {
 
-  <input id="udidInput" placeholder="🔒 Nhập UDID thiết bị của bạn" />
-  <button id="submitUdid">🔓 Bật MOD</button>
+    Int32 proc = Process.GetProcessesByName("HD-Player")[0].Id;
+    memory.OpenProcess(proc);
 
-  <div id="mod-options" style="display:none;">
-    <div class="mod-option"><label>Hack Dame <input type="checkbox" id="hackDame"></label></div>
-    <div class="mod-option"><label>Ghim Đầu <input type="checkbox" id="ghimDau"></label></div>
-    <div class="mod-option"><label>Fix Lag <input type="checkbox" id="fixLag"></label></div>
-    <div class="mod-option"><label>ESP <input type="checkbox" id="esp"></label></div>
-    <div class="mod-option"><label>Wallhack <input type="checkbox" id="wallhack"></label></div>
-    <div class="mod-option"><label>Aimbot <input type="checkbox" id="aimbot"></label></div>
+    var result = await memory.AoBScan("FF FF ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 ?? ?? ?? ?? ?? ?? ?? ?? 00 00 A5 43", true, true);
+    if (result.Any())
+    {
+    foreach (var Current in result)
+    {
+    Int64 leitura = Current + 0x80;
+    Int64 escri = Current + 0X7C;
+    var Read = memory.ReadMemory<int>
+        (leitura.ToString("X"));
+        memory.WriteMemory(escri.ToString("X"), "int", Read.ToString());
 
-    <div class="mod-buttons">
-      <button onclick="toggleAllMods(true)">🔓 BẬT TẤT CẢ</button>
-      <button onclick="toggleAllMods(false)">🔒 TẮT TẤT CẢ</button>
-    </div>
+        }
 
-    <button id="chooseFile" onclick="document.getElementById('fileInput').click()">📂 Chọn tệp cấu hình</button>
-    <input type="file" id="fileInput" style="display:none;" />
-    <button id="launchGame">🚀 Mở Free Fire</button>
-    <button id="openPanel">📊 Mở Panel</button>
-  </div>
+        this.Alert("AIMBOT DRAG : Activated", linia.enmType.Applied);//Error//Applying
+        Console.Beep(600, 300);
 
-  <div class="status" id="statusMsg">⚠️ Vui lòng nhập UDID</div>
-</div>
 
-<div id="mod-menu-right">
-  <h3>🧩 iMazing Tools</h3>
-  <div class="device-name">Hỗ trợ iOS / Android</div>
-  <div class="mod-option"><label>Auto Headshot <input type="checkbox" id="imzHeadshot"></label></div>
-  <div class="mod-option"><label>Khóa FPS Cao <input type="checkbox" id="imzFPS"></label></div>
-  <div class="mod-option"><label>Chống Giật <input type="checkbox" id="imzNoShake"></label></div>
-</div>
+        }
+        else
+        {
 
-<div id="panelWindow">
-  <h4>📊 Panel Giám Sát</h4>
-  <p>Trạng thái MOD: <span id="modStatus">Đang chạy ✅</span></p>
-  <p>Aimbot: <span id="aimbotStatus">Tắt ❌</span></p>
-  <p>Ghim đầu: <span id="ghimStatus">Tắt ❌</span></p>
-</div>
 
-<script>
-document.getElementById("submitUdid").onclick = function () {
-  const udid = document.getElementById("udidInput").value.trim();
-  const status = document.getElementById("statusMsg");
+        this.Alert("ERROR", linia.enmType.Applied);//Error//Applying
+        }
+        }
+        <div id="mod-toggle">MOD</div>
+        <div id="mod-toggle-right">+</div>
 
-  if (udid === "") {
-    status.innerHTML = "❗ Vui lòng nhập UDID trước khi bật MOD";
-    document.getElementById("mod-options").style.display = "none";
-  } else {
-    status.innerHTML = "<b>✅ MOD đã bật cho thiết bị của bạn</b>";
-    document.getElementById("mod-options").style.display = "block";
-  }
-};
+        <div id="mod-menu">
+            <h3>🎮 MOD MENU</h3>
+            <div class="device-name">Thiết bị bất kỳ</div>
 
-document.getElementById("mod-toggle").onclick = () => {
-  const menu = document.getElementById("mod-menu");
-  const isVisible = menu.style.display === "block";
-  menu.style.display = isVisible ? "none" : "block";
+            <input id="udidInput" placeholder="🔒 Nhập UDID thiết bị của bạn" />
+            <button id="submitUdid">🔓 Bật MOD</button>
 
-  if (!isVisible) alert("📢 Đã mở MOD MENU thành công!");
-};
+            <div id="mod-options" style="display:none;">
+                <div class="mod-option"><label>Hack Dame <input type="checkbox" id="hackDame"></label></div>
+                <div class="mod-option"><label>Ghim Đầu <input type="checkbox" id="ghimDau"></label></div>
+                <div class="mod-option"><label>Fix Lag <input type="checkbox" id="fixLag"></label></div>
+                <div class="mod-option"><label>ESP <input type="checkbox" id="esp"></label></div>
+                <div class="mod-option"><label>Wallhack <input type="checkbox" id="wallhack"></label></div>
+                <div class="mod-option"><label>Aimbot <input type="checkbox" id="aimbot"></label></div>
 
-document.getElementById("mod-toggle-right").onclick = () => {
-  const menu = document.getElementById("mod-menu-right");
-  const isVisible = menu.style.display === "block";
-  menu.style.display = isVisible ? "none" : "block";
+                <div class="mod-buttons">
+                    <button onclick="toggleAllMods(true)">🔓 BẬT TẤT CẢ</button>
+                    <button onclick="toggleAllMods(false)">🔒 TẮT TẤT CẢ</button>
+                </div>
 
-  if (!isVisible) alert("🔧 Đã mở iMazing Tools thành công!");
-};
+                <button id="chooseFile" onclick="document.getElementById('fileInput').click()">📂 Chọn tệp cấu hình</button>
+                <input type="file" id="fileInput" style="display:none;" />
+                <button id="launchGame">🚀 Mở Free Fire</button>
+                <button id="openPanel">📊 Mở Panel</button>
+            </div>
 
-function toggleAllMods(enable) {
-  const ids = ["hackDame", "ghimDau", "fixLag", "esp", "wallhack", "aimbot"];
-  ids.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.checked = enable;
-  });
-}
+            <div class="status" id="statusMsg">⚠️ Vui lòng nhập UDID</div>
+        </div>
 
-document.getElementById("launchGame").onclick = () => {
-  alert("🚀 Đang mở Free Fire ...");
-  window.location.href = "freefire://";
-};
+        <div id="mod-menu-right">
+            <h3>🧩 iMazing Tools</h3>
+            <div class="device-name">Hỗ trợ iOS / Android</div>
+            <div class="mod-option"><label>Auto Headshot <input type="checkbox" id="imzHeadshot"></label></div>
+            <div class="mod-option"><label>Khóa FPS Cao <input type="checkbox" id="imzFPS"></label></div>
+            <div class="mod-option"><label>Chống Giật <input type="checkbox" id="imzNoShake"></label></div>
+        </div>
 
-document.getElementById("openPanel").onclick = () => {
-  const panel = document.getElementById("panelWindow");
-  const aimbot = document.getElementById("aimbot").checked;
-  const ghim = document.getElementById("ghimDau").checked;
+        <div id="panelWindow">
+            <h4>📊 Panel Giám Sát</h4>
+            <p>Trạng thái MOD: <span id="modStatus">Đang chạy ✅</span></p>
+            <p>Aimbot: <span id="aimbotStatus">Tắt ❌</span></p>
+            <p>Ghim đầu: <span id="ghimStatus">Tắt ❌</span></p>
+        </div>
 
-  document.getElementById("aimbotStatus").innerText = aimbot ? "Bật ✅" : "Tắt ❌";
-  document.getElementById("ghimStatus").innerText = ghim ? "Bật ✅" : "Tắt ❌";
+        <script>
+            document.getElementById("submitUdid").onclick = function () {
+                const udid = document.getElementById("udidInput").value.trim();
+                const status = document.getElementById("statusMsg");
 
-  panel.style.display = panel.style.display === "none" ? "block" : "none";
-};
+                if (udid === "") {
+                    status.innerHTML = "❗ Vui lòng nhập UDID trước khi bật MOD";
+                    document.getElementById("mod-options").style.display = "none";
+                } else {
+                    status.innerHTML = "<b>✅ MOD đã bật cho thiết bị của bạn</b>";
+                    document.getElementById("mod-options").style.display = "block";
+                }
+            };
+
+            document.getElementById("mod-toggle").onclick = () => {
+                const menu = document.getElementById("mod-menu");
+                const isVisible = menu.style.display === "block";
+                menu.style.display = isVisible ? "none" : "block";
+
+                if (!isVisible) alert("📢 Đã mở MOD MENU thành công!");
+            };
+
+            document.getElementById("mod-toggle-right").onclick = () => {
+                const menu = document.getElementById("mod-menu-right");
+                const isVisible = menu.style.display === "block";
+                menu.style.display = isVisible ? "none" : "block";
+
+                if (!isVisible) alert("🔧 Đã mở iMazing Tools thành công!");
+            };
+
+            function toggleAllMods(enable) {
+                const ids = ["hackDame", "ghimDau", "fixLag", "esp", "wallhack", "aimbot"];
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.checked = enable;
+                });
+            }
+
+            document.getElementById("launchGame").onclick = () => {
+                alert("🚀 Đang mở Free Fire ...");
+                window.location.href = "freefire://";
+            };
+
+            document.getElementById("openPanel").onclick = () => {
+                const panel = document.getElementById("panelWindow");
+                const aimbot = document.getElementById("aimbot").checked;
+                const ghim = document.getElementById("ghimDau").checked;
+
+                document.getElementById("aimbotStatus").innerText = aimbot ? "Bật ✅" : "Tắt ❌";
+                document.getElementById("ghimStatus").innerText = ghim ? "Bật ✅" : "Tắt ❌";
+
+                panel.style.display = panel.style.display === "none" ? "block" : "none";
+            };
+        </script>
+
+</body>
+</html>
+
 </script>
 
 </body>
 </html>
+
